@@ -105,9 +105,17 @@ func (n *node) delete(val int) *node {
 	}
 
 	// both children exists
-	replacementNode := getSuccesor(n)
-	n.value = replacementNode.value
-	n.right = n.right.delete(replacementNode.value)
+	if n.right.height > n.left.height {
+		fmt.Println("find predecessor")
+		replacementNode := getPredecessor(n)
+		n.value = replacementNode.value
+		n.left = n.left.delete(replacementNode.value)
+	} else {
+		fmt.Println("find successor")
+		replacementNode := getSuccesor(n)
+		n.value = replacementNode.value
+		n.right = n.right.delete(replacementNode.value)
+	}
 	n.updateHeight()
 
 	return n
